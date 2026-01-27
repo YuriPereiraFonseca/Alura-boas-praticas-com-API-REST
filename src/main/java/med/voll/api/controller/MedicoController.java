@@ -56,5 +56,13 @@ public class MedicoController {
         return ResponseEntity.noContent().build();
     }
 
+    // Metodo de detalhar
+    @GetMapping("/{id}")
+    //Retorna código 204 ao invés de void
+    public ResponseEntity detalhar(@PathVariable Long id) {
+        var medico = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
+    }
+
 
 }
