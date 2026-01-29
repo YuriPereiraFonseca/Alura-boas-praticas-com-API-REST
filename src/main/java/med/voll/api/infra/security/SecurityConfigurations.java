@@ -1,0 +1,26 @@
+package med.voll.api.infra.security;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfigurations {
+
+    // Configura a segurança como STATELESS (sem sessões no servidor), ideal para APIs REST com JWT, e desabilita o CSRF, já que a autenticação via Token protege naturalmente contra esse ataque.
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf(csrf -> csrf.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .build();
+    }
+    // Agora, configuramos para o processo de autenticação ser stateless. Não será mais gerado o formulário de login e senha, quem faz isso é a nossa aplicação mobile, no front-end. E, também, não bloqueará mais a URL.
+
+    // Não bloqueia mais as requisições e nem exibindo o formulário de login
+}
